@@ -1,0 +1,16 @@
+{
+  "name": "meetup-stats",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Gavin Mogan <npm@gavinmogan.com> (https://www.gavinmogan.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "meetup-api": "^1.4.33",
+    "pify": "^4.0.0"
+  }
+}

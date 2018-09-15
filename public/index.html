@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
+    <style>
+      html, body {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        background:white;
+      }
+    </style>
+
+  </head>
+  <body>
+    <section id='textOutput-content'></section>
+    <script>
+      'use strict';
+      var meetupData;
+      function preload() {
+        meetupData = loadJSON('./data.json')
+      }
+
+      function setup() {
+        meetupData = Object.values(meetupData);
+        console.log('data', meetupData);
+        createCanvas(720, 400);
+        noStroke();
+        noLoop();  // Run once and stop
+      }
+
+      function draw() {
+        background(100);
+        textSize(32);
+        meetupData.slice(7, 8).forEach(function(meetup) {
+          console.log('meetup', new Date(meetup.time));
+          text(meetup.name, 10, 30);
+          const responses = [meetup.responses.yes, meetup.responses.no];
+          console.log(responses);
+          const total = responses.reduce((a, b) => a + b, 0);
+          pieChart(
+            300,
+            responses.map(function (response) {
+              console.log(response/total);
+              return 360*(response/total);
+            })
+          );
+        });
+      }
+
+      function pieChart(diameter, data) {
+        console.log('pieChart', diameter, data);
+        var lastAngle = 0;
+        for (var i = 0; i < data.length; i++) {
+          var gray = map(i, 0, data.length, 0, 255);
+          fill(gray);
+          arc(width/2, height/2, diameter, diameter, lastAngle, lastAngle+radians(data[i]));
+          lastAngle += radians(data[i]);
+        }
+      }
+    </script>
+  </body>
+</html>
+
